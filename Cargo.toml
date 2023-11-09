@@ -1,0 +1,13 @@
+[package]
+name = "google-timeline-parser"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.75"
+chrono = { version = "0.4.31", features = ["serde"] }
+serde = { version = "1.0.192", features = ["derive"] }
+struson = { version="0.3.0", features = ["serde"] }
+
+[dev-dependencies]
+float_eq = "1.0.1"
