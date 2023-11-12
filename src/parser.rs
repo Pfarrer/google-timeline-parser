@@ -14,6 +14,31 @@ struct JsonRecord {
     #[serde(rename = "longitudeE7")] 
     longitude_e7: Option<i32>,
     timestamp: Option<DateTime<Utc>>,
+    accuracy: Option<u32>,
+    source: Option<String>,
+
+    #[serde(default)]
+    activity: Vec<JsonActivity>
+}
+
+#[derive(Deserialize, Debug, PartialEq)]
+struct JsonActivity {
+    #[serde(rename = "activity")] 
+    guesses: Vec<JsonActivityGuess>,
+    timestamp: DateTime<Utc>,
+}
+
+///
+/// E.g.
+/// {
+///   "type": "STILL",
+///   "confidence": 96
+/// }
+/// 
+#[derive(Deserialize, Debug, PartialEq)]
+struct JsonActivityGuess {
+    r#type: String,
+    confidence: u8
 }
 
 impl TryInto<TimelineRecord> for JsonRecord {

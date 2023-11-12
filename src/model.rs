@@ -1,11 +1,4 @@
-use std::io::Read;
-
 use chrono::{DateTime, Utc};
-use struson::reader::JsonStreamReader;
-
-pub struct TimelineRecordsIter<R: Read> {
-    pub(crate) json_reader: JsonStreamReader<R>,
-}
 
 #[derive(Debug, PartialEq, Eq)]
 pub struct TimelineRecord {

@@ -1,4 +1,4 @@
-use google_timeline_parser::read_timeline_records;
+use google_timeline_parser::read_timeline_records_from_json;
 
 #[test]
 fn parse_multiple_locations_from_string() {
@@ -13,7 +13,7 @@ fn parse_multiple_locations_from_string() {
     "timestamp": "2023-10-10T07:59:55Z"
   }]
 }"#;
-    let mut records_iter = read_timeline_records(json.as_bytes()).unwrap();
+    let mut records_iter = read_timeline_records_from_json(json.as_bytes()).unwrap();
 
     assert!(records_iter.next().is_some());
     assert!(records_iter.next().is_some());
@@ -30,7 +30,7 @@ fn recovers_after_broken_item() {
   }]
 }"#;
 
-    let mut records_iter = read_timeline_records(json.as_bytes()).unwrap();
+    let mut records_iter = read_timeline_records_from_json(json.as_bytes()).unwrap();
     assert!(records_iter.next().is_some());
     assert!(records_iter.next().is_none());
 }
