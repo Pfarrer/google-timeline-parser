@@ -6,7 +6,8 @@ use zip::ZipArchive;
 #[test]
 fn read_timeline_records_from_archive_with_test_archive() {
     let project_root = env!("CARGO_MANIFEST_DIR");
-    let archive_file = File::open(format!("{}/tests/data/takeout-german.zip", project_root)).unwrap();
+    let archive_file =
+        File::open(format!("{}/tests/data/takeout-german.zip", project_root)).unwrap();
     let mut archive = ZipArchive::new(archive_file).unwrap();
     let mut records_iter = read_timeline_records_from_archive(&mut archive).unwrap();
 

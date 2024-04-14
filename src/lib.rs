@@ -18,7 +18,7 @@ pub use zip::read_timeline_records_from_archive;
 
 ///
 /// Examples:
-/// 
+///
 /// ```rust
 /// # use google_timeline_parser::read_timeline_records_from_json;
 /// #
@@ -27,17 +27,19 @@ pub use zip::read_timeline_records_from_archive;
 ///   "locations": [{
 ///     "latitudeE7": 525163702,
 ///     "longitudeE7": 133779641,
+///     "timestamp": "2023-10-10T07:59:55Z",
 ///     "accuracy": 14,
-///     "timestamp": "2023-10-10T07:59:55Z"
+///     "activity": [{"activity": [{"type": "WALKING", "confidence": 91}]}]
 ///   }]
 /// }"#;
-/// 
+///
 /// let mut records_iter = read_timeline_records_from_json(json.as_bytes())?;
 /// assert!(records_iter.next().is_some());
 /// assert!(records_iter.next().is_none());
 /// # Ok(())
 /// # }
 /// ```
+///
 pub fn read_timeline_records_from_json<T: Read>(reader: T) -> Result<TimelineRecordsIter<T>> {
     let mut json_reader = JsonStreamReader::new(reader);
     json_reader.seek_to(&json_path!["locations"])?;
@@ -57,9 +59,8 @@ impl<R: Read> Iterator for TimelineRecordsIter<R> {
         if self.json_reader.has_next().unwrap_or(false) {
             let result = read_timeline_record(&mut self.json_reader);
             if let Ok(record) = result {
-                return Some(record)
-            }
-            else {
+                return Some(record);
+            } else {
                 return self.next();
             }
         } else {
